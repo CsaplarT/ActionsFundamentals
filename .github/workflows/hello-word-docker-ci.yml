@@ -1,0 +1,23 @@
+name: Hello Word Docker CI
+
+on:
+  push: 
+    branches: [ main ]
+    paths: [ .github/workflows/** ]
+  workflow_dispatch:
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        run: actions/checkout@v3.3.0
+
+      - name: Run my container action
+        id: hello-action
+        uses: ./hello-word-docker-action
+        with:
+          who-to-greet: '@CsaplarT'
+
+      - name: Output time set in the container
+        run: echo "The time was ${{ steps.hello-action.outputs.time }} when the action said hello"
